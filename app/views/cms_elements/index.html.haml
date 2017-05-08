@@ -1,0 +1,18 @@
+%p#notice= notice
+%h1 Cms Elements
+%table
+  %thead
+    %tr
+      %th Markup
+      %th Styles
+      %th{:colspan => "3"}
+  %tbody
+    - @cms_elements.each do |cms_element|
+      %tr
+        %td= cms_element.markup
+        %td= cms_element.styles
+        %td= link_to 'Show', cms_element
+        %td= link_to 'Edit', edit_cms_element_path(cms_element)
+        %td= link_to 'Destroy', cms_element, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Cms Element', new_cms_element_path

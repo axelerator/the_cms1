@@ -1,0 +1,10 @@
+%p#notice= notice
+%p
+  %strong Markup:
+  = @cms_element.markup
+%p
+  %strong Styles:
+  = @cms_element.styles
+= link_to 'Edit', edit_cms_element_path(@cms_element)
+|
+= link_to 'Back', cms_elements_path
