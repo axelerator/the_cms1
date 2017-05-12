@@ -1,0 +1,50 @@
+$max-width-tablet: 992px
+$max-width-phone: 575px
+
+=on_desktop
+  @media (min-width: $max-width-tablet + 1px)
+    @content
+=on_tablet_and_smaller
+  @media (max-width: $max-width-tablet)
+    @content
+=on_phone
+  @media (max-width: $max-width-phone)
+    @content
+
+=on_tablet_and_larger
+  @media (min-width: $max-width-phone + 1)
+    @content
+=hide_on_print
+  @media print 
+    display: none
+
+=print_only
+  display: none
+  @media print 
+    display: block
+
+=grid($cols, $collapse_on_mobile: true)
+  display: flex
+  width: 100%
+  $gutter_size: 16px
+  $total_weight: 0
+
+  @each $col_name, $col_weight in $cols
+    $total_weight: $total_weight + $col_weight
+
+  @each $col_name, $col_weight in $cols
+    > .#{$col_name}
+      width: percentage($col_weight / $total_weight)
+  > *
+    margin: 0 $gutter_size*0.5
+    &:first-child
+      margin-left: 0
+    &:last-child
+      margin-right: 0
+  @if $collapse_on_mobile
+    +on_phone
+      flex-wrap: wrap
+      @each $col_name, $col_weight in $cols
+        > .#{$col_name}
+          width: 100%
+          margin: $gutter_size 0 0 0

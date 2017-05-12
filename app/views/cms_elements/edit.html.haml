@@ -1,5 +1,12 @@
 %h1 Editing Cms Element
-= render 'form', cms_element: @cms_element
+
+.editor
+  .raw
+    = render 'form', cms_element: @cms_element
+  .view
+    = @cms_element.parsed.map(&:to_html).join("\n").html_safe
+  .styles
+    %pre=@cms_element.parsed.map(&:to_css).join("\n")
 = link_to 'Show', @cms_element
 |
 = link_to 'Back', cms_elements_path
