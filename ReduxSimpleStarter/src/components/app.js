@@ -1,29 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PageEditor from './../containers/page_editor';
 
-class BoxConfig extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      left: 0,
-      right: 10
-    }
-    this.updateLeft = this.updateLeft.bind(this);
-  }
-  updateLeft(e) {
-    const num = parseInt(e.target.value);
-    this.setState({ left: num });
-  }
-
-  render() {
-    return (
-      <div>
-        <div><input onChange={this.updateLeft} value={this.state.left}/></div>
-      </div>
-    );
-  }
-
-}
 
 class CMSSection extends Component {
   render() {
@@ -31,14 +9,15 @@ class CMSSection extends Component {
       <section>SECTION!!</section>
     );
   }
-
 }
+
+
 
 export default class App extends Component {
   render() {
     return (
       <div>
-        <BoxConfig />
+        <PageEditor />
         Reac simple starter!!
         <CMSSection />
       </div>

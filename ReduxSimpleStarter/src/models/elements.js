@@ -1,4 +1,6 @@
-class BoxProperty {
+import uuidV4 from 'uuid/v4';
+
+export class BoxProperty {
   constructor() {
     this.top = 0;
     this.right = 0;
@@ -22,15 +24,30 @@ class Border extends BoxProperty {
 
 export class SectionElement {
   constructor() {
+    this.id = uuidV4();
     this.cssProperties = [];
-    this.cssProperties.push();
+    this.cssProperties.push(new Border());
   }
 }
 
 export class Page {
   constructor() {
     this.elements = [];
+    this.name = 'new page';
     this.elements.push(new SectionElement());
+  }
+
+  updateName(newName) {
+    const clone = this.clone();
+    clone.name = newName;
+    return clone;
+  }
+
+  clone() {
+    const newPage = new Page();
+    newPage.elements = this.elements;
+    newPage.name = this.name;
+    return newPage;
   }
 }
 
