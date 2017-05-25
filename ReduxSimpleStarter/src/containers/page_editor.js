@@ -3,55 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { BoxProperty } from '../models/elements.js';
-
-
-class BoxConfig extends Component {
-  constructor(props) {
-    super(props);
-    const property = new BoxProperty();
-
-    this.state = {
-      top: property.top,
-      bottom: property.bottom,
-      right: property.right,
-      left: property.left,
-      unit: property.unit
-    }
-    this.updateLeft = this.updateLeft.bind(this);
-  }
-  updateTop(e) {
-    const num = parseInt(e.target.value);
-    this.setState({ top: num });
-  }
-
-  updateRight(e) {
-    const num = parseInt(e.target.value);
-    this.setState({ right: num });
-  }
-
-  updateBottom(e) {
-    const num = parseInt(e.target.value);
-    this.setState({ bottom: num });
-  }
-
-  updateLeft(e) {
-    const num = parseInt(e.target.value);
-    this.setState({ left: num });
-  }
-
-  render() {
-    return (
-      <div className="box-config">
-        <div><input onChange={this.updateTop} value={this.state.top}/></div>
-        <div><input onChange={this.updateRight} value={this.state.right}/></div>
-        <div><input onChange={this.updateBottom} value={this.state.bottom}/></div>
-        <div><input onChange={this.updateLeft} value={this.state.left}/></div>
-      </div>
-    );
-  }
-
-}
+import PagePreview from './../components/page_preview.js';
+import ElementEditor from './element_editor.js';
 
 class PageEditor extends Component {
   constructor(props) {
@@ -60,7 +13,7 @@ class PageEditor extends Component {
 
   elements() {
     return _.map(this.props.page.elements, e => {
-      return <BoxConfig key={e.id}  />
+      return <ElementEditor key={e.id} element={e} />
     })
   }
 
@@ -68,12 +21,15 @@ class PageEditor extends Component {
     if (!this.props.page)
       return <div>Loading..</div>;
     return (
-      <div>page editor{ this.props.page.name}
-        <input value={this.props.page.name} onChange={(e) => this.props.changeNameAction(e.target.value)}/>
-        <div className="elements">
-          { this.elements() }
-        </div>
+      <div className="cms">
+        <PagePreview page={this.props.page}/>
+        <div className="page-editor">page editor{ this.props.page.name}
+          <input value={this.props.page.name} onChange={(e) => this.props.changeNameAction(e.target.value)}/>
+          <div className="elements">
+            { this.elements() }
+          </div>
 
+        </div>
       </div>
     );
   }

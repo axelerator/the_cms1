@@ -1,0 +1,38 @@
+@import color
+
+$color-ui-bg: color('grey', 'darken-1')
+$color-ui-input-text: color('grey', 'lighten-5')
+$color-ui-input-border: color('grey', 'lighten-1')
+
+.cms
+  display: flex
+
+.page-preview
+  width: 100%
+
+.page-editor
+  width: 200px
+  background-color: $color-ui-bg
+
+  input
+    color: $color-ui-input-text
+    border: none
+    border-bottom: 1px solid $color-ui-input-border
+    display: block
+    font-size: 9px
+    font-family: "Helvetica","Arial",sans-serif
+    margin: 0
+    padding: 4px 1px 1px 1px
+    width: 100%
+    background: 0 0
+    text-align: center
+
+.box-config
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  padding: 5px
+  .top, .bottom
+    margin: 0 (75% * 0.5)
+  .left, .right, .unit
+    width: 25%
