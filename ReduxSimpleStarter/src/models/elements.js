@@ -41,6 +41,7 @@ export class SectionElement {
 
 export class Page {
   constructor() {
+    this.id = uuidV4();
     this.elements = [];
     this.name = 'new page';
     this.elements.push(new SectionElement());

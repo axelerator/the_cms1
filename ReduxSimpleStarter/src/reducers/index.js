@@ -12,8 +12,21 @@ const CurrentPage = (state = new Page(), action) => {
   return state;
 }
 
+const Pages = (state = {}, action) => { 
+  switch (action.type) {
+    case 'ADD_PAGE':
+      const newPage = new Page();
+      let newState = {}
+      Object.assign(newState, state);
+      newState[newPage.id] = newPage;
+      return newState;
+  }
+  return state;
+}
+
 const rootReducer = combineReducers({
-  currentPage: CurrentPage
+  currentPage: CurrentPage,
+  pages: Pages
 });
 
 export default rootReducer;
