@@ -1,5 +1,8 @@
 {
   "name": "the_cms1",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-router-dom": "^4.0.0"
+  }
 }
