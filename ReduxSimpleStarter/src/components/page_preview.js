@@ -26,6 +26,9 @@ class ElementPreview extends Component {
     return (
       <div className="element-preview" style={style}>
         <p>ElementPreview</p>
+        <pre>
+          {JSON.stringify(style).replace(/,/g, "\n")}
+        </pre>
       </div>
     );
   }
