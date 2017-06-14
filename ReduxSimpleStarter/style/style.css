@@ -1632,4 +1632,11 @@
   .box-config .left, .box-config .right, .box-config .unit {
     width: 25%; }
 
+.element-preview-wrapper {
+  border: 1px solid transparent; }
+  .element-preview-wrapper:hover {
+    border-color: #CCEECC; }
+  .element-preview-wrapper.selected {
+    border-color: #99AA99; }
+
 /*# sourceMappingURL=style.css.map */

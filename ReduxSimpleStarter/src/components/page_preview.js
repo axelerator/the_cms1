@@ -9,12 +9,6 @@ class ElementPreview extends Component {
 
   }
 
-  properties() {
-    return _.map(this.props.element.cssProperties, p => {
-      return <BoxConfig key={p.cssPropertyName()} property={p} />
-    })
-  }
-
   render() {
     const style = {
       borderStyle: 'solid',

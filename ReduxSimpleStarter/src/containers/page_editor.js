@@ -10,27 +10,59 @@ import ElementEditor from './element_editor.js';
 class PageEditor extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      selectedElement: null
+    };
+
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
   }
 
+  selectElement(e) {
+    this.setState( { selectedElement: e});
+  }
+
   render() {
     const elements = _.map(this.props.page.elements, e => {
       return <ElementEditor key={e.id} element={e} />
     })
+    let element = '';
+    if (this.state.selectedElement) {
+      element = <ElementEditor key={this.state.selectedElement.id} element={this.state.selectedElement} />
+    }
+
+    const previews = _.map(this.props.page.elements , e => {
+      const style = {
+        borderStyle: 'solid',
+        borderColor: 'red'
+      };
+      e.cssProperties.forEach((p) => {
+        style[p.reactCssName()] = p.cssValue();
+      });
+
+      return <div className="element-preview-wrapper" key={e.id} onClick={() => this.selectElement(e)}>
+        <div className="element-preview"style={style}>
+          <pre>
+            {JSON.stringify(style).replace(/,/g, "\n")}
+          </pre>
+        </div>
+      </div>
+    });
 
     if (!this.props.page)
       return <div>Loading..</div>;
     return (
       <div className="cms">
         <Link to="/">home</Link>
-        <PagePreview page={this.props.page}/>
+        <div className="page-preview">
+          { previews }
+        </div>
         <div className="page-editor">page editor{ this.props.page.name}
           <input value={this.props.page.name} onChange={(e) => this.props.changeNameAction(this.props.page, e.target.value)}/>
           <div className="elements">
-            { elements }
+            { element }
           </div>
 
         </div>

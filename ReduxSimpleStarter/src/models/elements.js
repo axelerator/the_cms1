@@ -1,5 +1,8 @@
+import _ from 'lodash';
 import uuidV4 from 'uuid/v4';
 import camelize from 'camelize';
+
+export const SerializableClasses = {};
 
 export class CssProperty {
   constructor(element) {
@@ -27,6 +30,25 @@ export class CssProperty {
     const copy = this.constructor(this.element);
     Object.assign(copy, this);
     return copy;
+  }
+
+  toStorage() {
+    return {
+      propertyType: this.constructor.name,
+      id: this.id,
+      value: this.value
+    };
+  }
+
+  static fromStorage(element, plain) {
+    const factory = {
+      ColorProperty: ColorProperty,
+      BorderWidth: BorderWidth
+    };
+    const inst = new (factory[plain.propertyType])(element);
+    inst.id = plain.id;
+    inst.value = plain.value;
+    return inst;
   }
 }
 
@@ -69,6 +91,32 @@ export class SectionElement {
     this.cssProperties.push(new ColorProperty(this));
   }
 
+  toStorage() {
+    return {
+      elementType: this.constructor.name,
+      id: this.id,
+      properties: _.map(this.cssProperties, (p) => p.toStorage())
+    };
+  }
+
+  initFromStorage() {
+    // override in subclass to restor subclass specific
+    // data
+  }
+
+  static fromStorage(page, plain) {
+    const factory = {
+      SectionElement: SectionElement,
+      ColumnsElement: ColumnsElement,
+      PlainTextElement: PlainTextElement
+    };
+    const inst = new factory[plain.elementType](page);
+    inst.id = plain.id;
+    inst.initFromStorage(plain);
+    inst.cssProperties = _.map(plain.properties, (p) => CssProperty.fromStorage(inst, p));
+    return inst;
+  }
+
   clone() {
     let copy = new SectionElement(this.page);
     Object.assign(copy, this);
@@ -90,12 +138,47 @@ export class SectionElement {
   }
 }
 
+export class ColumnsElement extends SectionElement {
+  constructor(page) {
+    super(page);
+    this.columns = [];
+  }
+}
+
+export class PlainTextElement extends SectionElement {
+  constructor(page) {
+    super(page);
+    this.text = '';
+  }
+
+  extrasToStorage() {
+    re 
+  }
+}
+
 export class Page {
   constructor() {
     this.id = uuidV4();
     this.elements = [];
     this.name = 'new page';
     this.elements.push(new SectionElement(this));
+  }
+
+  toStorage() {
+    return {
+      serializableType: 'Page',
+      id: this.id,
+      name: this.name,
+      elements: _.map(this.elements, (e) => e.toStorage())
+    };
+  }
+
+  static fromStorage(plain) {
+    const inst = new Page(); 
+    inst.id = plain.id;
+    inst.name = plain.name;
+    inst.elements = _.map(plain.elements, (e) => SectionElement.fromStorage(inst, e));
+    return inst;
   }
 
   updateName(newName) {
@@ -125,4 +208,5 @@ export class Page {
     return newPage;
   }
 }
+SerializableClasses['Page'] = Page;
 
