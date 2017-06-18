@@ -2,16 +2,43 @@
 
 $color-ui-bg: color('grey', 'darken-1')
 $color-ui-input-text: color('grey', 'lighten-5')
-$color-ui-input-border: color('grey', 'lighten-1')
+$color-ui-input-border: color('grey', 'lighten-2')
+$color-component-separator: color('grey', 'darken-2')
+$color-text: color('teal', 'lighten-5')
+
+= default-font
+  font-family: 'Open Sans Condensed', 'Helvetica',sans-serif
+  font-size: 14px
+  font-weight: 300
+  color: $color-text
+
+
+$space-xs: 4px
+$separator: 1px solid $color-component-separator
+
+@import normalie
+body
+  background-color: $color-ui-bg
+
 
 .cms
   display: flex
-
-.page-preview
-  width: 100%
+  flex-wrap: wrap
+  > *
+    padding: $space-xs
+  .menu
+    width: 100%
+    border-bottom: $separator
+  .element-picker
+    width: 20%
+  .page-preview
+    flex-grow: 1
+    border-left: $separator
+    border-right: $separator
+  .page-editor
+    width: 20%
 
 .page-editor
-  width: 200px
   background-color: $color-ui-bg
 
   input
@@ -19,8 +46,6 @@ $color-ui-input-border: color('grey', 'lighten-1')
     border: none
     border-bottom: 1px solid $color-ui-input-border
     display: block
-    font-size: 9px
-    font-family: "Helvetica","Arial",sans-serif
     margin: 0
     padding: 4px 1px 1px 1px
     width: 100%

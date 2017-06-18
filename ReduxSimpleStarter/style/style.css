@@ -1600,22 +1600,50 @@
 .transparent-text {
   color: transparent !important; }
 
-.cms {
-  display: flex; }
+body, input {
+  font-family: "Open Sans Condensed", "Helvetica", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #e0f2f1; }
 
-.page-preview {
-  width: 100%; }
+a, a:visited {
+  font-family: "Open Sans Condensed", "Helvetica", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #e0f2f1;
+  text-decoration: none;
+  color: #b2dfdb; }
+
+a:visited {
+  text-decoration: underline; }
+
+body {
+  background-color: #757575; }
+
+.cms {
+  display: flex;
+  flex-wrap: wrap; }
+  .cms > * {
+    padding: 4px; }
+  .cms .menu {
+    width: 100%;
+    border-bottom: 1px solid #616161; }
+  .cms .element-picker {
+    width: 20%; }
+  .cms .page-preview {
+    flex-grow: 1;
+    border-left: 1px solid #616161;
+    border-right: 1px solid #616161; }
+  .cms .page-editor {
+    width: 20%; }
 
 .page-editor {
-  width: 200px;
   background-color: #757575; }
   .page-editor input {
     color: #fafafa;
     border: none;
-    border-bottom: 1px solid #bdbdbd;
+    border-bottom: 1px solid #e0e0e0;
     display: block;
-    font-size: 9px;
-    font-family: "Helvetica", "Arial", sans-serif;
     margin: 0;
     padding: 4px 1px 1px 1px;
     width: 100%;
