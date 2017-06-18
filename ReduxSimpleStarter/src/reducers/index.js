@@ -15,20 +15,23 @@ const Pages = (state = {}, action) => {
   switch (action.type) {
     case 'CHANGE_PAGE_NAME':
       return setPage(state, payload.page.updateName(payload.newName));
+    case 'ADD_ELEMENT':
+      return setPage(state, payload.page.appendElement(payload.elementType));
     case 'ADD_PAGE':
       return setPage(state, new Page());
     case 'UPDATE_PROPERTY':
-      const { property } = payload;
-      const { value } = payload;
-      const { page } = property.element;
-      const newState = setPage(state, page.updateProperty(property, value ));
+      const { property, pageId, elementId, value } = payload;
+      const page = state[pageId];
+      const newState = setPage(state, page.updateProperty(elementId, property.id, value ));
+
       return newState;
   }
   return state;
 }
 
+
 const rootReducer = combineReducers({
-  pages: Pages
+  pages: Pages,
 });
 
 export default rootReducer;

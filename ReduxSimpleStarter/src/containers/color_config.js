@@ -17,7 +17,7 @@ class ColorConfig extends Component {
   }
 
   submit() {
-    this.props.changeColor(this.props.property, this.state.colorValue);
+    this.props.changeColor(this.props.pageId, this.props.elementId, this.props.property, this.state.colorValue);
   }
 
   render() {
@@ -30,10 +30,10 @@ class ColorConfig extends Component {
 }
 
 
-function changeColor(property, value) {
+function changeColor(pageId, elementId, property, value) {
   return {
     type: 'UPDATE_PROPERTY',
-    payload: { property, value }
+    payload: { pageId, elementId, property, value }
   };
 }
 

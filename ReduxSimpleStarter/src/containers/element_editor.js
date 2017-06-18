@@ -10,15 +10,14 @@ import ColorConfig from './color_config.js';
 export default class ElementEditor extends Component {
   constructor(props) {
     super(props);
-
   }
 
   properties() {
     return _.map(this.props.element.cssProperties, p => {
       if (p instanceof BoxProperty) {
-        return <BoxConfig key={p.cssPropertyName()} property={p} />
+        return <BoxConfig key={p.cssPropertyName()} property={p} pageId={this.props.pageId} elementId={this.props.element.id}/>
       } else if (p instanceof ColorProperty) {
-        return <ColorConfig key={p.cssPropertyName()} property={p} />
+        return <ColorConfig key={p.cssPropertyName()} property={p} pageId={this.props.pageId} elementId={this.props.element.id}/>
       } else {
         return <div>Unkown property</div>;
       }

@@ -48,7 +48,7 @@ class BoxConfig extends Component {
   }
 
   submit() {
-    this.props.changeBoxProperty(this.props.property, this.state);
+    this.props.changeBoxProperty(this.props.pageId, this.props.elementId, this.props.property, this.state);
   }
 
   render() {
@@ -66,10 +66,10 @@ class BoxConfig extends Component {
 }
 
 
-function changeBoxProperty(property, value) {
+function changeBoxProperty(pageId, elementId, property, value) {
   return {
     type: 'UPDATE_PROPERTY',
-    payload: { property, value }
+    payload: { pageId, elementId, property, value }
   };
 }
 
