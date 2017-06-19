@@ -14,17 +14,23 @@ export class SectionElement {
     this.cssProperties.push(new P.ColorProperty(this));
   }
 
+  content() {
+    return '';
+  }
+
   toStorage() {
     return {
       elementType: this.constructor.name,
       id: this.id,
-      properties: _.map(this.cssProperties, (p) => p.toStorage())
+      properties: _.map(this.cssProperties, (p) => p.toStorage()),
+      elementAttributes: this.fromStorage()
     };
   }
 
   initFromStorage() {
     // override in subclass to restor subclass specific
     // data
+    return {};
   }
 
   static fromStorage(plain) {
@@ -37,11 +43,15 @@ export class SectionElement {
     inst.id = plain.id;
     inst.initFromStorage(plain);
     inst.cssProperties = _.map(plain.properties, (p) => P.CssProperty.fromStorage(p));
+    inst.extrasFromStorage(plain.elementAttributes || {});
     return inst;
   }
 
+  extrasFromStorage(extrasStorage) {
+  }
+
   clone() {
-    let copy = new SectionElement();
+    let copy = new this.constructor();
     Object.assign(copy, this);
     return copy;
   }
@@ -74,8 +84,24 @@ export class PlainTextElement extends SectionElement {
     this.text = '';
   }
 
+  content() {
+    return this.text;
+  }
+
   extrasToStorage() {
-    return {};
+    return {
+      text: this.text
+    };
+  }
+
+  updateText(value) {
+    const copy = this.clone();
+    copy.text = value;
+    return copy;
+  }
+
+  extrasFromStorage(extrasStorage) {
+    this.text = extrasStorage.text;
   }
 }
 
@@ -112,16 +138,24 @@ export class Page {
     return clone;
   }
 
-  updateProperty(elementId, propertyId, value) {
+  updateElement(elementId, func) {
     const clone = this.clone();
     clone.elements = _.map(clone.elements, (elem) => {
       if (elem.id == elementId) {
-        return elem.updateProperty(propertyId, value);
+        return func(elem);
       } else {
         return elem;
       }
     });
     return clone;
+  }
+
+  updateProperty(elementId, propertyId, value) {
+    return this.updateElement(elementId, (elem) => elem.updateProperty(propertyId, value));
+  }
+
+  updateTextProperty(elementId, value) {
+    return this.updateElement(elementId, (elem) => elem.updateText(value));
   }
 
   appendElement(elementType) {

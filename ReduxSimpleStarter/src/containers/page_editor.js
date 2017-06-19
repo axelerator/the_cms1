@@ -54,9 +54,7 @@ class PageEditor extends Component {
 
       return <div className="element-preview-wrapper" key={e.id} onClick={() => this.selectElement(e)}>
         <div className="element-preview"style={style}>
-        <pre>
-        {JSON.stringify(style).replace(/,/g, "\n")}
-        </pre>
+        { e.content() } 
         </div>
         </div>
     });

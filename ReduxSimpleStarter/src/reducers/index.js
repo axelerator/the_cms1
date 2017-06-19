@@ -7,6 +7,7 @@ function setPage(state, page) {
       let newState = {}
       Object.assign(newState, state);
       newState[page.id] = page;
+      console.log(newState);
       return newState;
 }
 
@@ -23,8 +24,11 @@ const Pages = (state = {}, action) => {
       const { property, pageId, elementId, value } = payload;
       const page = state[pageId];
       const newState = setPage(state, page.updateProperty(elementId, property.id, value ));
-
       return newState;
+    case 'UPDATE_PLAIN_TEXT_CONTENT':
+      return  setPage(state, 
+                      state[payload.pageId]
+                       .updateTextProperty(payload.elementId, payload.value));
   }
   return state;
 }
