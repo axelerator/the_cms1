@@ -34,6 +34,7 @@ export class ElementEditor extends Component {
       extras.push(<textarea key='textinput' onChange={(e) => this.props.changeText(this.props.pageId, this.props.element.id, e.target.value)}>
                     {this.props.element.text}
                   </textarea>);
+    } else if (this.props.element instanceof ColumnsElement) {
     }
     return (
       <div className="element-editor">

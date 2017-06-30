@@ -23,8 +23,12 @@ export class SectionElement {
       elementType: this.constructor.name,
       id: this.id,
       properties: _.map(this.cssProperties, (p) => p.toStorage()),
-      elementAttributes: this.fromStorage()
+      elementAttributes: this.extrasToStorage()
     };
+  }
+
+  extrasToStorage() { 
+    return {};
   }
 
   initFromStorage() {
